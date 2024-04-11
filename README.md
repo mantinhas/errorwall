@@ -1,5 +1,7 @@
 # Errorwall
 
+Simple Error Firewall that intercepts messages from an application. This error firewall detects the flag "yao" in messages
+
 ## Building
 
 ### Building errorwall docker container
