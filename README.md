@@ -1,6 +1,9 @@
 # Errorwall
 
-Simple Error Firewall that intercepts messages from an application. This error firewall detects the flag "yao" in messages
+This project contains two sandboxed applications:
+
+- Errorwall : a proxy server that receives messages (simulating error messages), and will detect the flag "yao" in plaintext
+- Sample-App : a sample python application that reads user input and sends it through a WebSocket to the Errorwall
 
 ## Building
 
