@@ -1,9 +1,15 @@
-FROM python:latest
+FROM gramineproject/gramine:latest
 
 COPY . /app
 
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y python3 python3-pip
+
 RUN pip install -r requirements.txt
 
-CMD ["sh", "-c", "python input.py --hostname=$HOSTNAME --port=$PORT"]
+RUN gramine-sgx-gen-private-key
+
+RUN make SGX=1
+
+ENTRYPOINT ["sh", "-c", "gramine-sgx ./python scripts/input.py --hostname=$HOSTNAME --port=$PORT"]
