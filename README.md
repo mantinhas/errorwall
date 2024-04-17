@@ -1,9 +1,9 @@
-# Errorwall
+# Errorwall - sample-app-gramined branch
 
 This project contains two sandboxed applications:
 
 - Errorwall : a proxy server that receives messages (simulating error messages), and will detect the flag "yao" in plaintext
-- Sample-App : a sample python application that reads user input and sends it through a WebSocket to the Errorwall
+- Sample-App : a sample python application that reads user input and sends it through a WebSocket to the Errorwall. This sample app is running inside of an SGX enclave using Gramine.
 
 ## Building
 
@@ -16,7 +16,7 @@ docker build -f errorwall/Dockerfile -t errorwall errorwall/
 ### Building sample application for input
 
 ```
-docker build -f sample-app/Dockerfile -t sample-app sample-app/
+docker build -f sample-app/Dockerfile -t sample-app-gramined sample-app/
 ```
 
 ## Deployment
@@ -41,11 +41,12 @@ docker run -it --rm \
 
 ```
 docker run -it --rm \
-    --name=sample-app \
+    --device=/dev/sgx_enclave \
+    --name=sample-app-gramined \
     -e HOSTNAME=errorwall \
     -e PORT=8765 \
     --network=errorwall-net \
-    sample-app:latest
+    sample-app-gramined:latest
 ```
 
 ## Cleanup
@@ -53,5 +54,5 @@ docker run -it --rm \
 ```
 docker network rm errorwall-net
 docker image rm errorwall
-docker image rm sample-app
+docker image rm sample-app-gramined
 ```
